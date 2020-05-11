@@ -1,0 +1,145 @@
+@import "fonts"
+@import "libs"
+@import "vars"
+@import "btn"
+
+*
+	-webkit-box-sizing: border-box
+	-moz-box-sizing: border-box
+	box-sizing: border-box
+	&:before, &:after
+		-webkit-box-sizing: border-box
+		-moz-box-sizing: border-box
+		box-sizing: border-box
+
+*::-webkit-input-placeholder
+	color: #666
+	opacity: 1
+
+*:-moz-placeholder
+	color: #666
+	opacity: 1
+
+*::-moz-placeholder
+	color: #666
+	opacity: 1
+
+*:-ms-input-placeholder
+	color: #666
+	opacity: 1
+
+body input:focus:required:invalid,
+body textarea:focus:required:invalid
+	color: #666
+body input:required:valid,
+body textarea:required:valid
+	color: #666
+
+//body
+html
+	height: 100%
+
+body
+	min-height: 100vh
+	margin: 0px
+	padding: 0px
+	font-size: 17px
+	min-width: 320px
+	position: relative
+	line-height: 1.60
+	font-family: $default-font
+	overflow-x: hidden
+	color: $normal
+	display: flex
+	flex-direction: column
+	justify-content: space-between
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6
+	line-height: 1.2
+	margin: 0
+	padding: 0
+
+h1
+	font-size: 43px
+	line-height: 1.2
+
+h2
+	font-size: 38px
+	text-align: center
+	margin-bottom: 60px
+
+h3
+	font-size: 31px
+
+h4
+	font-size: 23px
+
+h5
+	font-size: 18px!important
+
+h6
+	font-size: 17px!important
+
+.fsn
+	font-size: 17px!important
+
+.w100
+	width: 100%
+
+ul, li
+	display: block
+	margin: 0
+	padding: 0
+
+.succ-c
+	color: #4caf50
+
+.info-c
+	color: #1867c0
+
+.accent-c
+	color: #ea0037
+
+.link
+	color: #ff5252!important
+	text-decoration: none!important
+a
+	color: $accent
+	outline: none!important
+	+mt(.5s)
+
+.s-shadow
+	box-shadow: 0px 0px 29px 0px rgba(102,102,102,0.5)
+
+.img-responsive
+	display: block
+	max-width: 100%
+	height: auto
+
+.text-center
+	text-align: center
+
+.w-space
+	white-space: normal!important
+
+::selection
+	background-color: $accent
+	color: #fff
+
+.s-dark
+	background-color: $dark
+	color: $normal
+
+.s-white
+	background-color: $white
+	color: $dark
+
+.s-wide
+	padding: 80px 0 70px
+
+.s-profile-comments .v-rating .v-icon,.s-task-details .v-rating .v-icon
+	padding: 0px!important
+
+.description-content-images .v-btn--round .v-btn__content .v-icon
+	color: #666!important
+@import "media" // Всегда в конце
