@@ -69,7 +69,50 @@
         <v-col cols="9">
           <v-card class="px-7 py-8">
             <v-card
-              class="mx-auto pb-2 px-2 mb-8"
+              v-for="task in tasks"
+              class="mx-auto task pb-2 px-2 mb-8"
+              max-width="100%"
+              outlined
+            >
+              <v-list-item three-line>
+                <v-list-item-content>
+                  <div class="overline mb-4">Дата добавления 12-11-2020</div>
+                  <v-list-item-title class="headline mb-1">{{task.name}}</v-list-item-title>
+                  <div class="mt-2 mb-3">
+                    <span class="task-price py-2 px-4" v-if="task.priceFor">{{task.price}} € - {{task.priceFor}}</span>
+                    <span class="task-price py-2 px-4" v-else>{{task.price}} € </span>
+                  </div>
+                  <v-list-item-subtitle>улица Николая Клюева, 67, посёлок Марьино</v-list-item-subtitle>
+                  <v-list-item-subtitle>20 апреля, 19:00 — 21 апреля, 20:00</v-list-item-subtitle>
+                </v-list-item-content>
+
+                <div class="d-flex align-center">
+                  <div class="task-user mt-3">
+                    <div class="task-user-type">Заказчик:</div>
+                    <div class="task-user-name" style="font-weight: 600">Scurtu Andrei</div>
+                    <div class="task-user-comments d-flex" style="font-size: 15px; opacity: .6">
+                      <div class="task-user-comments-text">Comments:</div>
+                      <v-icon size="20" class="ml-1 mr-1">comment</v-icon>
+                      <span class="task-user-comments-number">2</span>
+                    </div>
+                  </div>
+
+                  <v-list-item-avatar
+                    tile
+                    size="80"
+                    color="grey"
+                  ></v-list-item-avatar>
+                </div>
+
+              </v-list-item>
+
+              <v-card-actions>
+                <v-btn to="/task-details" min-width="110" depressed color="success">Подробнее</v-btn>
+                <v-btn to="/make-offer" depressed color="error">Сделать предложение</v-btn>
+              </v-card-actions>
+            </v-card>
+            <v-card
+              class="mx-auto task pb-2 px-2 mb-8"
               max-width="100%"
               outlined
             >
@@ -118,18 +161,13 @@
 </template>
 
 <script>
+    import tasksApi from "api/tasks";
+
     export default {
         name: "FindTask",
         data() {
             return {
                 items: [
-                    {
-                        action: 'local_activity',
-                        title: 'Attractions',
-                        items: [
-                            {title: 'List Item'},
-                        ],
-                    },
                     {
                         action: 'restaurant',
                         title: 'Dining',
@@ -147,36 +185,24 @@
                             {title: 'List Item'},
                         ],
                     },
-                    {
-                        action: 'directions_run',
-                        title: 'Family',
-                        items: [
-                            {title: 'List Item'},
-                        ],
-                    },
-                    {
-                        action: 'healing',
-                        title: 'Health',
-                        items: [
-                            {title: 'List Item'},
-                        ],
-                    },
-                    {
-                        action: 'content_cut',
-                        title: 'Office',
-                        items: [
-                            {title: 'List Item'},
-                        ],
-                    },
-                    {
-                        action: 'local_offer',
-                        title: 'Promotions',
-                        items: [
-                            {title: 'List Item'},
-                        ],
-                    },
                 ],
+                tasks: [],
             }
+        },
+        methods: {
+            deleteTask (task) {
+                console.log(task)
+                tasksApi.remove({id: task.id}).then(result => {
+                    if (result.ok) {
+                        this.tasks.splice(this.tasks.indexOf(task), 1)
+                    }}
+                )
+            },
+        },
+        created: function () {
+            tasksApi.list().then(result=>
+                result.json().then(data =>
+                    data.forEach(task => this.tasks.push(task))))
         },
     }
 </script>
