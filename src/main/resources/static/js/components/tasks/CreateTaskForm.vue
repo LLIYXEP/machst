@@ -492,9 +492,7 @@
                     } else {
                         let formData = new FormData();
                         formData.append('file', this.avatar);
-                        axios.post('/task/image', formData
-                            // {'imageTest': 'this.avatar'}
-                            )
+                        axios.post('/task/image', formData)
                         tasksApi.add(task).then(result =>
                             result.json().then(data => {
                                 this.tasks.push(data);
@@ -582,6 +580,7 @@
                 reader.readAsDataURL(image)
                 reader.onload = (e) => {
                     this.avatar = reader.result
+                    console.log(reader.result)
                 }
             },
         },
