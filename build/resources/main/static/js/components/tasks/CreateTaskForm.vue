@@ -5,7 +5,6 @@
       <v-row>
         <v-col cols="8" offset="2">
           <h2>Создать новое задание</h2>
-          Avatar<img :src="avatar">
           <v-alert
             border="top"
             colored-border
@@ -18,7 +17,7 @@
               v-model="valid"
               lazy-validation
               class="new-task-form px-5 pt-8 pb-12"
-
+              enctype="multipart/form-data"
             >
               <v-row>
                 <v-col
@@ -399,7 +398,7 @@
         name: "CreateTaskForm",
         data() {
             return {
-                avatar: null,
+                avatar: [],
                 task: null,
                 id: null,
                 name: '',
@@ -491,14 +490,22 @@
                         )
                     } else {
                         let formData = new FormData();
-                        formData.append('file', this.avatar);
-                        axios.post('/task/image', formData
-                            // {'imageTest': 'this.avatar'}
-                            )
-                        tasksApi.add(task).then(result =>
-                            result.json().then(data => {
-                                this.tasks.push(data);
-                            }))
+                        for(let i = 0; i < this.avatar.length; i++) {
+                            formData.append('image'+i, this.avatar[i]);
+                        }
+                        // for(let i = 0; i < this.avatar.length; i++) {
+                        //     formData.append('file'+i, this.avatar[i]);
+                        // }
+
+                        axios.post('/task/image', formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            },
+                        })
+                        // tasksApi.add(task).then(result =>
+                        //     result.json().then(data => {
+                        //         this.tasks.push(data);
+                        //     }))
                         // this.$router.push("/tasks")
                     }
                 }
@@ -577,12 +584,28 @@
                 this.anotherWork = [...this.anotherWork]
             },
             GetImage (e) {
-                let image = this.files[0]
-                let reader = new FileReader()
-                reader.readAsDataURL(image)
-                reader.onload = (e) => {
-                    this.avatar = reader.result
-                }
+                console.log(this.files, "$$$$$$")
+                console.log(this.files[0], "$$$$$$")
+                console.log(this.files[1], "$$$$$$")
+                this.avatar = this.files
+
+                // for (let i = 0 ; i < this.files.length; i++) {
+                //     let reader = new FileReader()
+                //     let image = this.files[i]
+                //     reader.readAsDataURL(image)
+                //     reader.onload = (e) => {
+                //         this.avatar.push(reader.result)
+                //         console.log(reader.result)
+                //     }
+                // }
+
+                // let image = this.files[0]
+                // let reader = new FileReader()
+                // reader.readAsDataURL(image)
+                // reader.onload = (e) => {
+                //     this.avatar = reader.result
+                //     console.log(reader.result)
+                // }
             },
         },
         created: function () {
